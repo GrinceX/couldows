@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ตัวนับเวลาถอยหลัง: อีก 3 เดือน & 1 ปี</title>
+  <style>
+    :root{
+      --bg:#0b0f13; --panel:#121821; --ink:#e6f0ff; --muted:#9fb3c8; --accent:#6cf; --glow:#00e5ff55;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Noto Sans Thai",sans-serif;background:radial-gradient(80vmax 80vmax at 120% -20%, #10324a33, transparent),linear-gradient(#0b0f13,#0a0d12);color:var(--ink)}
+    header{padding:28px 20px 8px;text-align:center}
+    h1{margin:0;font-weight:800;letter-spacing:.3px}
+    .sub{color:var(--muted);margin-top:6px}
+    .wrap{max-width:980px;margin:18px auto;padding:0 16px 60px;display:grid;gap:18px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+    .card{background:linear-gradient(180deg,#121821,#0f141c);border:1px solid #1c2430;border-radius:16px;box-shadow:0 20px 50px #0008, inset 0 0 40px var(--glow);padding:18px 16px 16px;position:relative;overflow:hidden}
+    .card::after{content:"";position:absolute;inset:-2px;-webkit-mask:radial-gradient(240px 120px at 110% -10%,#0000 45%,#000 46%) ;background:linear-gradient(90deg,transparent, #3cf2, transparent)}
+    .title{display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:2px}
+    .pill{font-size:12px;padding:4px 8px;border-radius:999px;background:#0a2538;border:1px solid #114566;color:#a9e9ff}
+    .target{font-size:12px;color:var(--muted);margin-bottom:12px}
+    .clock{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+    .big{font-variant-numeric:tabular-nums lining-nums;font-size:40px;font-weight:800;letter-spacing:.5px}
+    .unit{font-size:12px;color:var(--muted);margin-left:2px}
+    .sep{opacity:.4}
+    .line{height:1px;background:linear-gradient(90deg,transparent,#2a3a50,transparent);margin:12px 0}
+    .stats{display:flex;gap:12px;flex-wrap:wrap}
+    .kv{flex:1 1 90px;background:#0c131b;border:1px solid #1b2836;border-radius:12px;padding:10px}
+    .k{font-size:11px;color:#9bb0c8;margin-bottom:4px}
+    .v{font-size:18px;font-weight:700}
+    footer{color:#6f86a3;text-align:center;font-size:12px;margin-top:10px}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>ตัวนับเวลาถอยหลัง</h1>
+    <div class="sub">นับจาก “ตอนนี้” ไปยัง “อีก 3 เดือน” และ “อีก 1 ปี” แบบอัปเดตตลอดเวลา</div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid">
+      <article class="card" id="card-3m">
+        <div class="title">อีก 3 เดือน <span class="pill">3 Months</span></div>
+        <div class="target" id="target-3m"></div>
+        <div class="clock">
+          <span class="big" id="h-3m">--</span><span class="unit">ชั่วโมง</span>
+          <span class="sep">·</span>
+          <span class="big" id="m-3m">--</span><span class="unit">นาที</span>
+          <span class="sep">·</span>
+          <span class="big" id="s-3m">--</span><span class="unit">วินาที</span>
+        </div>
+        <div class="line"></div>
+        <div class="stats">
+          <div class="kv"><div class="k">เหลือ</div><div class="v"><span id="y-3m">–</span> ปี</div></div>
+          <div class="kv"><div class="k">เหลือ</div><div class="v"><span id="mo-3m">–</span> เดือน</div></div>
+          <div class="kv"><div class="k">เหลือ</div><div class="v"><span id="d-3m">–</span> วัน</div></div>
+        </div>
+      </article>
+
+      <article class="card" id="card-1y">
+        <div class="title">อีก 1 ปี <span class="pill">1 Year</span></div>
+        <div class="target" id="target-1y"></div>
+        <div class="clock">
+          <span class="big" id="h-1y">--</span><span class="unit">ชั่วโมง</span>
+          <span class="sep">·</span>
+          <span class="big" id="m-1y">--</span><span class="unit">นาที</span>
+          <span class="sep">·</span>
+          <span class="big" id="s-1y">--</span><span class="unit">วินาที</span>
+        </div>
+        <div class="line"></div>
+        <div class="stats">
+          <div class="kv"><div class="k">เหลือ</div><div class="v"><span id="y-1y">–</span> ปี</div></div>
+          <div class="kv"><div class="k">เหลือ</div><div class="v"><span id="mo-1y">–</span> เดือน</div></div>
+          <div class="kv"><div class="k">เหลือ</div><div class="v"><span id="d-1y">–</span> วัน</div></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="title">โหมดความแม่นยำ <span class="pill">Calendar-accurate</span></div>
+      <p class="sub">การแสดง “ปี/เดือน/วัน” ใช้วิธีคิดแบบ <span class="mono">calendar diff</span> (คำนึงถึงจำนวนวันแต่ละเดือนและปีอธิกสุรทิน) ส่วน “ชั่วโมง/นาที/วินาที” คิดจากเวลาที่เหลือแบบต่อเนื่อง</p>
+    </section>
+  </main>
+
+  <footer>
+    ทำงานบนเครื่องของคุณแบบออฟไลน์ — ไม่พึ่งอินเทอร์เน็ตหรือเซิร์ฟเวอร์ภายนอก
+  </footer>
+
+  <script>
+    // สร้างเวลาเป้าหมายแบบยึดตามปฏิทิน
+    function addCalendarMonths(date, months){
+      const d = new Date(date);
+      const targetMonth = d.getMonth() + months;
+      d.setMonth(targetMonth);
+      // จัดการเคสปลายเดือน (เช่น 31 ไปยังเดือนที่มี 30 วัน)
+      if (d.getMonth() !== ((targetMonth % 12)+12)%12) {
+        d.setDate(0); // ถอยไปวันสุดท้ายของเดือนก่อนหน้า
+      }
+      return d;
+    }
+
+    function addCalendarYears(date, years){
+      const d = new Date(date);
+      const m = d.getMonth();
+      d.setFullYear(d.getFullYear()+years);
+      // ถ้ากระโดดเดือน (เช่น 29 ก.พ.) ให้ใช้วันสุดท้ายของเดือนก่อนหน้า
+      if (d.getMonth() !== m){
+        d.setDate(0);
+      }
+      return d;
+    }
+
+    // คำนวณส่วนต่างแบบปฏิทิน (ปี/เดือน/วัน/ชั่วโมง/นาที/วินาที)
+    function calendarDiffParts(from, to){
+      if (to <= from){
+        return {y:0, mo:0, d:0, h:0, mi:0, s:0};
+      }
+      let start = new Date(from);
+      let y=0, mo=0, d=0, h=0, mi=0, s=0;
+
+      // ปี
+      while (true){
+        const next = addCalendarYears(start, 1);
+        if (next <= to){ y++; start = next; } else break;
+      }
+      // เดือน
+      while (true){
+        const next = addCalendarMonths(start, 1);
+        if (next <= to){ mo++; start = next; } else break;
+      }
+      // วัน
+      while (true){
+        const next = new Date(start.getFullYear(), start.getMonth(), start.getDate()+1);
+        if (next <= to){ d++; start = next; } else break;
+      }
+      // ชั่วโมง
+      while (true){
+        const next = new Date(start.getTime() + 3600_000);
+        if (next <= to){ h++; start = next; } else break;
+      }
+      // นาที
+      while (true){
+        const next = new Date(start.getTime() + 60_000);
+        if (next <= to){ mi++; start = next; } else break;
+      }
+      // วินาที (ปัดลง)
+      s = Math.max(0, Math.floor((to - start)/1000));
+      return {y, mo, d, h, mi, s};
+    }
+
+    // แปลง ms -> h/m/s รวม
+    function hmsFromMs(ms){
+      if (ms < 0) ms = 0;
+      const sec = Math.floor(ms/1000);
+      const h = Math.floor(sec/3600);
+      const m = Math.floor((sec%3600)/60);
+      const s = sec%60;
+      return {h, m, s};
+    }
+
+    function formatThaiDate(d){
+      return d.toLocaleString('th-TH', {
+        dateStyle: 'full', timeStyle: 'medium'
+      });
+    }
+
+    const startAt = new Date();
+    const target3m = addCalendarMonths(startAt, 3);
+    const target1y = addCalendarYears(startAt, 1);
+
+    document.getElementById('target-3m').textContent = 'สิ้นสุดที่: ' + formatThaiDate(target3m);
+    document.getElementById('target-1y').textContent = 'สิ้นสุดที่: ' + formatThaiDate(target1y);
+
+    function update(){
+      const now = new Date();
+
+      // อีก 3 เดือน
+      const diff3m = calendarDiffParts(now, target3m);
+      const hms3 = hmsFromMs(target3m - now);
+      setText('y-3m', diff3m.y);
+      setText('mo-3m', diff3m.mo);
+      setText('d-3m', diff3m.d);
+      setText('h-3m', pad(hms3.h));
+      setText('m-3m', pad(hms3.m));
+      setText('s-3m', pad(hms3.s));
+
+      // อีก 1 ปี
+      const diff1y = calendarDiffParts(now, target1y);
+      const hms1 = hmsFromMs(target1y - now);
+      setText('y-1y', diff1y.y);
+      setText('mo-1y', diff1y.mo);
+      setText('d-1y', diff1y.d);
+      setText('h-1y', pad(hms1.h));
+      setText('m-1y', pad(hms1.m));
+      setText('s-1y', pad(hms1.s));
+    }
+
+    function setText(id, v){ document.getElementById(id).textContent = v; }
+    function pad(n){ return String(n).padStart(2,'0'); }
+
+    // อัปเดตทุกวินาทีแบบเสถียร (sync กับนาฬิการะบบ)
+    function tick(){
+      update();
+      const now = Date.now();
+      const next = 1000 - (now % 1000) + 5; // buffer 5ms ป้องกัน jitter
+      setTimeout(tick, next);
+    }
+
+    update();
+    tick();
+
+    // หากผู้ใช้เปิด/กลับเข้าหน้าใหม่ ให้ sync อีกครั้ง
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) update(); });
+  </script>
+</body>
+</html>
